@@ -121,14 +121,12 @@ import MenuItem from "./Menu/MenuItem";
 import useAuth from "../../../hooks/useAuth";
 
 import { Link } from "react-router-dom";
-import useRole from "../../../hooks/useRole";
+// import useRole from "../../../hooks/useRole";
 import AdminMenu from "./Menu/AdminMenu";
-import StudentMenu from "./Menu/StudentMenu";
-import TeacherMenu from "./Menu/TeacherMenu";
 const Sidebar = () => {
   const { logOut } = useAuth();
   const [isActive, setActive] = useState(false);
-  const [role, isLoading] = useRole();
+  // const [role, isLoading] = useRole();
 
   // Sidebar Responsive Handler
   const handleToggle = () => {
@@ -143,7 +141,7 @@ const Sidebar = () => {
             <Link to="/">
               <h2 className="text-2xl font-semibold text-blue-500">
                 {" "}
-                Edu_Managemnet
+                Event_Managemnet
               </h2>
               {/* <img
                 // className='hidden md:block'
@@ -192,10 +190,10 @@ const Sidebar = () => {
           {/* Nav Items */}
           <div className="flex flex-col justify-between flex-1 mt-6">
             <nav>
-              {/*  Menu Items */}
-              {role === "teacher" && <TeacherMenu />}
-              {role === "student" && <StudentMenu />}
-              {role === "admin" && <AdminMenu />}
+              <AdminMenu />
+              {/* {role  === "teacher" && <TeacherMenu />}
+              {role  === "student" && <StudentMenu />}
+              {role  === "admin" && <AdminMenu />} */}
             </nav>
           </div>
         </div>

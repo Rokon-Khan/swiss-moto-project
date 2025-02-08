@@ -1,20 +1,29 @@
-const AddPlantForm = () => {
+import PropTypes from "prop-types";
+import { TbFidgetSpinner } from "react-icons/tb";
+
+const AddEventFrom = ({
+  handleSubmit,
+  uploadImage,
+  setUploadImage,
+  loading,
+}) => {
   return (
     <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
-      <form>
+      <h2 className="text-4xl font-bold mb-10">Add Events From Dashboard</h2>
+      <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
           <div className="space-y-6">
             {/* Name */}
             <div className="space-y-1 text-sm">
               <label htmlFor="name" className="block text-gray-600">
-                Name
+                Event Name
               </label>
               <input
                 className="w-full px-4 py-3 text-gray-800 border border-blue-300 focus:outline-blue-500 rounded-md bg-white"
-                name="name"
-                id="name"
+                name="title"
+                id="title"
                 type="text"
-                placeholder="Plant Name"
+                placeholder="Write Yiur Paintinig Ot Art Name"
                 required
               />
             </div>
@@ -25,13 +34,15 @@ const AddPlantForm = () => {
               </label>
               <select
                 required
-                className="w-full px-4 py-3 border-lime-300 focus:outline-blue-500 rounded-md bg-white"
+                className="w-full px-4 py-3 border-blue-300 focus:outline-blue-500 rounded-md bg-white"
                 name="category"
               >
-                <option value="Indoor">Indoor</option>
-                <option value="Outdoor">Outdoor</option>
-                <option value="Succulent">Succulent</option>
-                <option value="Flowering">Flowering</option>
+                <option value="Programming">Programming</option>
+                <option value="AI & Machine Learning">
+                  AI & Machine Learning
+                </option>
+                <option value="VR Technology">VR Technology</option>
+                <option value="Health and Medical">Health and Medical</option>
               </select>
             </div>
             {/* Description */}
@@ -43,25 +54,23 @@ const AddPlantForm = () => {
               <textarea
                 id="description"
                 placeholder="Write plant description here..."
-                className="block rounded-md focus:lime-300 w-full h-32 px-4 py-3 text-gray-800  border border-blue-300 bg-white focus:outline-blue-500 "
+                className="block rounded-md focus:blue-300 w-full h-32 px-4 py-3 text-gray-800  border border-blue-300 bg-white focus:outline-blue-500 "
                 name="description"
               ></textarea>
             </div>
           </div>
           <div className="space-y-6 flex flex-col">
-            {/* Price & Quantity */}
             <div className="flex justify-between gap-2">
-              {/* Price */}
               <div className="space-y-1 text-sm">
                 <label htmlFor="price" className="block text-gray-600 ">
-                  Price
+                  Event Start Date
                 </label>
                 <input
                   className="w-full px-4 py-3 text-gray-800 border border-blue-300 focus:outline-blue-500 rounded-md bg-white"
-                  name="price"
-                  id="price"
-                  type="number"
-                  placeholder="Price per unit"
+                  name="startDate"
+                  id="startDate"
+                  type="date"
+                  placeholder="Input Your Date"
                   required
                 />
               </div>
@@ -69,14 +78,14 @@ const AddPlantForm = () => {
               {/* Quantity */}
               <div className="space-y-1 text-sm">
                 <label htmlFor="quantity" className="block text-gray-600">
-                  Quantity
+                  Event Ending Date
                 </label>
                 <input
                   className="w-full px-4 py-3 text-gray-800 border border-blue-300 focus:outline-blue-500 rounded-md bg-white"
-                  name="quantity"
-                  id="quantity"
-                  type="number"
-                  placeholder="Available quantity"
+                  name="endingDate"
+                  id="endingDate"
+                  type="date"
+                  placeholder="Input Your Ending Date"
                   required
                 />
               </div>
@@ -87,27 +96,44 @@ const AddPlantForm = () => {
                 <div className="flex flex-col w-max mx-auto text-center">
                   <label>
                     <input
+                      onChange={(e) =>
+                        setUploadImage({
+                          image: e.target.files[0],
+                          url: URL.createObjectURL(e.target.files[0]),
+                        })
+                      }
                       className="text-sm cursor-pointer w-36 hidden"
                       type="file"
                       name="image"
                       id="image"
                       accept="image/*"
                       hidden
+                      required
                     />
                     <div className="bg-blue-500 text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3 hover:bg-blue-500">
-                      Upload
+                      {uploadImage?.image?.name}
                     </div>
                   </label>
                 </div>
               </div>
             </div>
+            {uploadImage && uploadImage?.image?.size && (
+              <div className="flex gap-5 items-center">
+                <img className="w-20" src={uploadImage?.url} alt="" />
+                <p>Image Size: {uploadImage?.image?.size} Bytes</p>
+              </div>
+            )}
 
             {/* Submit Button */}
             <button
               type="submit"
               className="w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-blue-500 "
             >
-              Save & Continue
+              {loading ? (
+                <TbFidgetSpinner className="animate-spin m-auto" />
+              ) : (
+                "Save & Continue"
+              )}
             </button>
           </div>
         </div>
@@ -116,4 +142,11 @@ const AddPlantForm = () => {
   );
 };
 
-export default AddPlantForm;
+AddEventFrom.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+  setUploadImage: PropTypes.func.isRequired,
+  uploadImage: PropTypes.object,
+  loading: PropTypes.bool,
+};
+
+export default AddEventFrom;

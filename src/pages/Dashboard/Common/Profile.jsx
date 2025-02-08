@@ -6,7 +6,7 @@ import useRole from "../../../hooks/useRole";
 const Profile = () => {
   const { user } = useAuth();
 
-  const [roleData, isLoading] = useRole(); // Destructure roleData and loading state
+  const [roleData, isLoading] = useRole();
 
   if (isLoading) {
     return <p>Loading profile...</p>;
