@@ -56,13 +56,13 @@ const AddEvent = () => {
       await axiosSecure.post("/events", artData);
       Swal.fire({
         title: "Success!",
-        text: "Your Art Product has been added successfully!",
+        text: "Your Event has been added successfully!",
         icon: "success",
         confirmButtonText: "OK",
       });
 
       // 6. Navigate to homepage
-      navigate("/dashboard/products");
+      navigate("/dashboard/my-events");
     } catch (err) {
       console.error(err);
       toast.error(err.message);
