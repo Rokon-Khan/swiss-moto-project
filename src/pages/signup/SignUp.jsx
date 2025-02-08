@@ -5,8 +5,8 @@ import { FcGoogle } from "react-icons/fc";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import { saveUser } from "../../api/saveUser";
-import { uploadToCloudinary } from "../../api/utlis";
+// import { saveUser } from "../../api/saveUser";
+import { saveUser, uploadToCloudinary } from "../../api/utlis";
 import useAuth from "../../hooks/useAuth";
 
 const SignUp = () => {
@@ -59,11 +59,30 @@ const SignUp = () => {
   };
 
   // Handle Google Signin
+  // const handleGoogleSignIn = async () => {
+  //   try {
+  //     //User Registration using google
+  //     await signInWithGoogle();
+
+  //     Swal.fire({
+  //       title: "Success!",
+  //       text: "Signup Successful",
+  //       icon: "success",
+  //       confirmButtonText: "OK",
+  //     });
+
+  //     navigate("/");
+  //   } catch (err) {
+  //     console.log(err);
+  //     toast.error(err?.message);
+  //   }
+  // };
+
   const handleGoogleSignIn = async () => {
     try {
       //User Registration using google
-      await signInWithGoogle();
-
+      const data = await signInWithGoogle();
+      await saveUser(data?.user);
       Swal.fire({
         title: "Success!",
         text: "Signup Successful",
@@ -72,6 +91,8 @@ const SignUp = () => {
       });
 
       navigate("/");
+
+      // toast.success("Signup Successful");
     } catch (err) {
       console.log(err);
       toast.error(err?.message);

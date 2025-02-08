@@ -2,6 +2,8 @@ import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { saveUser } from "../../api/saveUser";
 import LoadingSpinner from "../../components/Shared/LoadingSpinner";
 import useAuth from "../../hooks/useAuth";
 
@@ -32,12 +34,32 @@ const Login = () => {
   };
 
   // Handle Google Signin
+  // const handleGoogleSignIn = async () => {
+  //   try {
+  //     //User Registration using google
+  //     await signInWithGoogle();
+  //     navigate(from, { replace: true });
+  //     toast.success("Login Successful");
+  //   } catch (err) {
+  //     console.log(err);
+  //     toast.error(err?.message);
+  //   }
+  // };
   const handleGoogleSignIn = async () => {
     try {
       //User Registration using google
-      await signInWithGoogle();
-      navigate(from, { replace: true });
-      toast.success("Login Successful");
+      const data = await signInWithGoogle();
+      await saveUser(data?.user);
+      Swal.fire({
+        title: "Success!",
+        text: "Signup Successful",
+        icon: "success",
+        confirmButtonText: "OK",
+      });
+
+      navigate("/");
+
+      // toast.success("Signup Successful");
     } catch (err) {
       console.log(err);
       toast.error(err?.message);
