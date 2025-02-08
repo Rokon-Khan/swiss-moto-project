@@ -108,7 +108,7 @@ const MyEventCard = () => {
             </div>
             <div className="mt-4 flex justify-between">
               <button
-                onClick={() => navigate("/update-events")}
+                onClick={() => navigate(`/dashboard/update-event/${event._id}`)}
                 className="btn bg-blue-500 hover:bg-blue-700 text-white"
               >
                 Update

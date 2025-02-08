@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import AddEvent from "../components/Form/AddEvent";
+import UpdateEvent from "../components/Form/UpdateEvent";
 import MyEventCard from "../components/myEvents/MyEventCard";
 import DashboardLayout from "../layout/DashboardLayout";
 import MainLaout from "../layout/MainLayout";
@@ -52,6 +53,15 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <MyEventCard />
+          </PrivateRoute>
+        ),
+      },
+
+      {
+        path: "update-event/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateEvent />
           </PrivateRoute>
         ),
       },
